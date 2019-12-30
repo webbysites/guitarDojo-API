@@ -1,0 +1,16 @@
+schema {
+    query: Query
+}
+
+type Query {
+    allContacts: [Contacts]
+    contact(id: String): Contact
+}
+
+type Contact {
+    firstName: String
+    lastName: String
+    email: String
+    phone: String
+    message: String
+}
