@@ -16,8 +16,12 @@ import lombok.Setter;
 @Table
 @Entity
 public class Contact {
-    @Id
-    private String id;
+    // public Contact(int i, String string, String string2, String string3, String string4, String string5) {
+    // }
+    // public Contact(){}
+
+	@Id
+    private int id;
     private String firstName;
     private String lastName;
     private String email;

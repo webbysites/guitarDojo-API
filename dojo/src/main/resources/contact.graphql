@@ -3,7 +3,7 @@ schema {
 }
 
 type Query {
-    allContacts: [Contacts]
+    allContacts: [Contact]
     contact(id: String): Contact
 }
 
