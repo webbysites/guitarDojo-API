@@ -1,7 +1,7 @@
 package com.guitardojo.dojo.config;
 
 import com.guitardojo.dojo.models.Contact;
-import com.guitardojo.dojo.repos.ContactRepo;
+import com.guitardojo.dojo.repositories.ContactRepository;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

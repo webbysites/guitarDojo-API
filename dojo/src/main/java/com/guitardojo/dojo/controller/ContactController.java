@@ -4,73 +4,49 @@ import java.util.List;
 import java.util.Optional;
 
 import com.guitardojo.dojo.models.Contact;
-import com.guitardojo.dojo.repos.ContactRepo;
-import com.guitardojo.dojo.service.ContactService;
+import com.guitardojo.dojo.repositories.ContactRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@CrossOrigin(origins = "http://locaohost:8080", maxAge = 3600)
-// @RequestMapping("/contacts")
+@RequestMapping("/contact")
 public class ContactController {
 
-    // private ContactRepo contactRepo;
-
-    // public ContactController(ContactRepo contactRepo) {
-    //     this.contactRepo = contactRepo;
-    // }
-
     @Autowired
-    private ContactService contactService;
-    
-    private ContactRepo contactRepo;
+    private ContactRepository contactRepo;
 
-    public ContactController(ContactRepo contactRepo) {
-        this.contactRepo = contactRepo;
-    }
-    
-
-    @RequestMapping("/create") 
-    public String create(@RequestParam int id, @RequestParam String firstName, @RequestParam String lastName,   @RequestParam String email, @RequestParam String phone, @RequestParam String message) {
-        Contact contact = contactService.create(firstName, lastName, email, phone, message);
-        return contact.toString();
-    }
-
-    @RequestMapping("/get")
-    public Contact getContact(@RequestParam String firstName) {
-        return contactService.getByFirstName(firstName);
+    @PostMapping("/create") 
+    public Contact createContact(@RequestBody Contact contact) {
+        return contactRepo.save(contact);
     }
 
     // get by id
-    @RequestMapping("/get/{id}")
+    @GetMapping("/get/{id}")
     public Optional<Contact> getById(@PathVariable("id") String id) {
         return contactRepo.findById(id);
     }
 
-    @RequestMapping("/getAll") 
+    @GetMapping("/getAll") 
     public List<Contact> getAll() {
-        return contactService.getAll();
+        return contactRepo.findAll();
     }
 
-    @RequestMapping("/update")
-    public String update(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String phone, @RequestParam String message) {
-        Contact contact = contactService.update(firstName, lastName, email, phone, message);
-        return contact.toString();
-    }
-
-    // @RequestMapping("/delete")
-    // public String delete(@RequestParam String firstName) {
-    //     contactService.delete(firstName);
-    //     return "Deleted " + firstName;
+    // @RequestMapping("/update")
+    // public String update(@RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String phone, @RequestParam String message) {
+    //     Contact contact = contactRepo.update(firstName, lastName, email, phone, message);
+    //     return contact.toString();
     // }
 
-    @DeleteMapping("deleteAll")
+    @DeleteMapping("/deleteAll")
     public void deleteAll() {
         this.contactRepo.deleteAll();
     }
