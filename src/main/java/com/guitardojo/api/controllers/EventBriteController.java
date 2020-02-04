@@ -22,6 +22,7 @@ public class EventBriteController {
 	public Object getEvents() {
 		Object events = restTemplate.getForObject(token + "&expand=venue", Object.class);
 		return events;
+		
 	}
 
 }
